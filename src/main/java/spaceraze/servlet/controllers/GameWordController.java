@@ -1,10 +1,7 @@
 package spaceraze.servlet.controllers;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import spaceraze.servlet.repositories.GameWorldRepository;
 import spaceraze.servlet.repositories.SpaceshipTypeRepository;
 import spaceraze.servlethelper.handlers.GameWorldHandler;
@@ -24,18 +21,22 @@ public class GameWordController {
     @GetMapping("/{name}/{version}")
     //@RequestMapping("/{name}/{version}")
     public GameWorld gameWorld(@PathVariable String name, @PathVariable int version){
+
+        //TODO only run this the fista time to create the Gameworld in the database.
+        gameWorldRepository.deleteAll();
         //thelastgreatwar
         GameWorld gameWorld = GameWorldHandler.getGameWorld("thelastgreatwar");
-
-        //gameWorldRepository.save(gameWorld);
         gameWorldRepository.saveAndFlush(gameWorld);
 
-        GameWorld gameWorld2 = gameWorldRepository.findAll().get(0);
-
-        //spaceshipTypeRepository.save(gameWorld.getShipTypes().get(0));
-
-        //List<SpaceshipType> all = spaceshipTypeRepository.findAll();
+        //starts the read(get)
+        //TODO add logik to user in variable name and version
+        GameWorld gameWorld2 = gameWorldRepository.findAll().get(gameWorldRepository.findAll().size() -1);
 
         return gameWorld2;
     }
+/*
+    @PutMapping()
+    public GameWorld gameWorld(){}
+
+ */
 }

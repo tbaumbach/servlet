@@ -12,7 +12,7 @@ public interface MapRepository extends JpaRepository<Map, Long> {
 
     List<Map> findAllByAuthor(String author);
 
-    Map findMapByKey(String key);
+    Map findMapByUuid(String key);
 
     Map findMapByNameAndVersionId(String name, long version);
 }

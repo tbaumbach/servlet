@@ -23,7 +23,7 @@ public class MapService {
     }
 
     public Map getMapByKey(String key) {
-        return mapRepository.findMapByKey(key);
+        return mapRepository.findMapByUuid(key);
     }
 
     public Map getMapByNameAndVersion(String name, int version) {
@@ -31,12 +31,12 @@ public class MapService {
     }
 
     public Map saveMap(Map map) {
-        if(map.getKey() == null){
-            map.setKey(UUID.randomUUID().toString());
+        if(map.getUuid() == null){
+            map.setUuid(UUID.randomUUID().toString());
         }else{
-            Map existingMap = getMapByKey(map.getKey());
+            Map existingMap = getMapByKey(map.getUuid());
             if(existingMap == null){
-                throw new RuntimeException("No map exists with key: " + map.getKey());
+                throw new RuntimeException("No map exists with key: " + map.getUuid());
             }else if(MapStatus.DRAFT == map.getStatus()){
                 //Update
                 map.setId(existingMap.getId());
@@ -45,8 +45,8 @@ public class MapService {
                     throw new RuntimeException("This map is already published with the version number: " + map.getVersionId());
                 }
                 // Save the published map with a new key and change status on existing.
-                map.setKey(UUID.randomUUID().toString());
-                mapRepository.saveAndFlush(map);
+                map.setUuid(UUID.randomUUID().toString());
+                mapRepository.saveAndFlush(map);//TODO spara vi inte ner den 2 gånger nu?
 
                 existingMap.setStatus(MapStatus.REPLACED);
                 mapRepository.saveAndFlush(existingMap);
