@@ -41,7 +41,7 @@ public class OldMapService {
     }
 
     private List<Map> getAllMaps(){
-        String dataPath = env.getProperty("old.datapath");
+        String dataPath = env.getProperty("datapath");
 
         List<Map> allMaps = new ArrayList<>();
         Logger.finer("getAllMaps() called");
@@ -149,9 +149,9 @@ public class OldMapService {
         Logger.fine("MapHandler.getProps: folderPath=" + folderPath);
         List<String> allMapNames = new LinkedList<String>();
         File propFolder;
-        try {
-            propFolder = context.getResource("classpath:" + folderPath).getFile();
-            //File propFolder = new File(folderPath);
+       // try {
+            //propFolder = context.getResource("classpath:" + folderPath).getFile();
+            propFolder = new File(folderPath);
             if (propFolder.exists()){
                 File[] propFiles = propFolder.listFiles(new MapFileNameFilter());
                 for (int i = 0; i < propFiles.length; i++) {
@@ -160,9 +160,10 @@ public class OldMapService {
                     allMapNames.add(mapName);
                 }
             }
+            /*
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
         return allMapNames;
