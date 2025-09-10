@@ -35,15 +35,13 @@ public class MapController {
     }
     */
 
-    @GetMapping("/{key}/{version}")
-    //@RequestMapping("/{key}/{version}")
+    @GetMapping("/{key}")
     public Map getMapByKey(@PathVariable String key){
         return mapService.getMapByKey(key);
 
     }
 
     @GetMapping("/{name}/{version}")
-    //@RequestMapping("/{name}/{version}")
     public Map getMapByNameAndVersion(@PathVariable String name, @PathVariable int version){
         return mapService.getMapByNameAndVersion(name, version);
 
