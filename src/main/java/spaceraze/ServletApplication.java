@@ -1,11 +1,10 @@
-package spaceraze.servlet;
+package spaceraze;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-@EntityScan("spaceraze.*")
-
+@EntityScan(basePackages = {"spaceraze", "spaceraze.map"})
 @SpringBootApplication
 public class ServletApplication {
 

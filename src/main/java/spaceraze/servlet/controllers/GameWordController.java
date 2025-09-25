@@ -2,13 +2,9 @@ package spaceraze.servlet.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import spaceraze.servlet.repositories.GameWorldRepository;
-import spaceraze.servlet.repositories.SpaceshipTypeRepository;
+import spaceraze.servlet.world.repository.GameWorldRepository;
 import spaceraze.servlethelper.handlers.GameWorldHandler;
 import spaceraze.world.GameWorld;
-import spaceraze.world.SpaceshipType;
-
-import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -16,7 +12,13 @@ import java.util.List;
 public class GameWordController {
 
     private GameWorldRepository gameWorldRepository;
-    private SpaceshipTypeRepository spaceshipTypeRepository;
+  //  private SpaceshipTypeRepository spaceshipTypeRepository;
+
+    /*
+    public GameWordController(GameWorldRepository gameWorldRepository, SpaceshipTypeRepository spaceshipTypeRepository){
+        this.gameWorldRepository = gameWorldRepository;
+        this.spaceshipTypeRepository = spaceshipTypeRepository;
+    }*/
 
     @GetMapping("/{name}/{version}")
     //@RequestMapping("/{name}/{version}")

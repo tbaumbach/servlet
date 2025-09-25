@@ -1,15 +1,14 @@
 package spaceraze.servlet.services;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
-import spaceraze.servlet.repositories.MapRepository;
+import spaceraze.servlet.map.repository.GalaxyMapRepository;
 import spaceraze.util.general.Logger;
-import spaceraze.world.Map;
-import spaceraze.world.MapStatus;
+import spaceraze.map.GalaxyMap;
+import spaceraze.map.MapStatus;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,7 +24,7 @@ import java.util.Properties;
 @AllArgsConstructor
 @Service
 public class OldMapService {
-    private final MapRepository mapRepository;
+   // private final GalaxyMapRepository mapRepository;
 
     //@Value("${old.datapath}")
     //private String dataPath;
@@ -34,16 +33,16 @@ public class OldMapService {
     private ApplicationContext context;
 
 
-    public List<Map> createMapsFromOldFile() {
+    public List<GalaxyMap> createMapsFromOldFile() {
 
-        List<Map> allMaps = getAllMaps();
-        return mapRepository.saveAll(allMaps);
+        List<GalaxyMap> allMaps = getAllMaps();
+        return null; //mapRepository.saveAll(allMaps);
     }
 
-    private List<Map> getAllMaps(){
+    private List<GalaxyMap> getAllMaps(){
         String dataPath = env.getProperty("datapath");
 
-        List<Map> allMaps = new ArrayList<>();
+        List<GalaxyMap> allMaps = new ArrayList<>();
         Logger.finer("getAllMaps() called");
         // read maps from file and create allMaps List
         /*if (dataPath == null){
@@ -91,8 +90,8 @@ public class OldMapService {
         return allMaps;
     }
 
-    private List<Map> loadAllMapsFromFolder(String completePath){
-        List<Map> allMaps = new ArrayList<>();
+    private List<GalaxyMap> loadAllMapsFromFolder(String completePath){
+        List<GalaxyMap> allMaps = new ArrayList<>();
         List<String> allMapNames = getProps(completePath);
         for (String mapName : allMapNames) {
             Properties prop = new Properties();
@@ -115,7 +114,7 @@ public class OldMapService {
                         }
                     }
                     br.close();
-                    Map map = new Map();
+                    GalaxyMap map = new GalaxyMap();
                     map.initMap(mapName, prop);
                     map.setStatus(MapStatus.PUBLISHED);
                     allMaps.add(map);
@@ -129,9 +128,9 @@ public class OldMapService {
         return allMaps;
     }
 
-    private List<Map> getMapDrafts(String playerLogin){
+    private List<GalaxyMap> getMapDrafts(String playerLogin){
         String dataPath = env.getProperty("old.datapath");
-        List<Map> allMaps = new ArrayList<>();
+        List<GalaxyMap> allMaps = new ArrayList<>();
         Logger.finer("getMapDrafts() called");
         // read maps from file and create allMaps List
         /*if (dataPath == null){
@@ -141,7 +140,7 @@ public class OldMapService {
         String completePath = dataPath + "maps\\" + playerLogin + "\\";
         List<String> allMapNames = getProps(completePath);
         for (String mapName : allMapNames) {
-            allMaps.add(new Map(playerLogin + "." + mapName));
+            allMaps.add(new GalaxyMap(playerLogin + "." + mapName));
         }
         return allMaps;
     }
