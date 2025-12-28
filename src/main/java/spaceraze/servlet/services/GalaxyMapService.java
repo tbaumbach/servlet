@@ -11,16 +11,14 @@ import java.util.UUID;
 
 @Service
 public class GalaxyMapService {
-    /*
     private final GalaxyMapRepository mapRepository;
 
     public GalaxyMapService(GalaxyMapRepository mapRepository) {
         this.mapRepository = mapRepository;
     }
-    */
 
     public List<GalaxyMap> getAllPublishedMaps() {
-        return null; //mapRepository.findAllByStatus(MapStatus.PUBLISHED);
+        return mapRepository.findAllByStatus(MapStatus.PUBLISHED);
     }
 
     public List<GalaxyMap> getAllMapsCreatedByUser(String author) {
@@ -28,12 +26,11 @@ public class GalaxyMapService {
     }
 
     public GalaxyMap getMapByKey(String key) {
-        return null;
-     //   return mapRepository.findGalaxyMapByUuidAndStatus(key, MapStatus.PUBLISHED);
+        return mapRepository.findGalaxyMapByUuidAndStatus(key, MapStatus.PUBLISHED);
     }
 
     public GalaxyMap getMapByKeyAndVersion(String key, int version) {
-        return null; // mapRepository.findGalaxyMapByUuidAndVersionId(key, version);
+        return mapRepository.findGalaxyMapByUuidAndVersionId(key, version);
     }
 
     public GalaxyMap saveMap(GalaxyMap map) {

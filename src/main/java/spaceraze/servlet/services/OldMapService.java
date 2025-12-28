@@ -31,11 +31,13 @@ public class OldMapService {
 
     private Environment env;
     private ApplicationContext context;
+    private GalaxyMapRepository mapRepository;
 
 
     public List<GalaxyMap> createMapsFromOldFile() {
 
         List<GalaxyMap> allMaps = getAllMaps();
+        mapRepository.saveAll(allMaps);
         return null; //mapRepository.saveAll(allMaps);
     }
 

@@ -20,22 +20,22 @@ import java.util.Map;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        basePackages = "spaceraze.servlet.map.repository",
-        entityManagerFactoryRef = "mapEntityManagerFactory",
-        transactionManagerRef = "mapTransactionManager"
+        basePackages = "spaceraze.servlet.user.repository",
+        entityManagerFactoryRef = "userEntityManagerFactory",
+        transactionManagerRef = "userTransactionManager"
 )
-public class MapDataSourceConfig {
+public class UserDataSourceConfig {
 
-    @Bean(name = "mapDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.map")
-    public DataSource mapDataSource() {
+    @Bean(name = "userDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.user")
+    public DataSource usreDataSource() {
         return DataSourceBuilder.create().build();
     }
 
-    @Bean(name = "mapEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean mapEntityManagerFactory(
+    @Bean(name = "userEntityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean userEntityManagerFactory(
             EntityManagerFactoryBuilder builder,
-            @Qualifier("mapDataSource") DataSource dataSource) {
+            @Qualifier("userDataSource") DataSource dataSource) {
 
         Map<String, Object> properties = new HashMap<>();
         // Sätt dialekt för SQL Server
@@ -45,16 +45,24 @@ public class MapDataSourceConfig {
 
         return builder
                 .dataSource(dataSource)
-                .packages("spaceraze.map")
-                .persistenceUnit("map")
+                .packages("spaceraze.user")
+                .persistenceUnit("user")
                 .properties(properties) // Lägg till properties här
                 .build();
 
+        /*
+        return builder
+                .dataSource(dataSource)
+                .packages("spaceraze.user")
+                .persistenceUnit("user")
+                .build();
+
+         */
     }
 
-    @Bean(name = "mapTransactionManager")
-    public PlatformTransactionManager mapTransactionManager(
-            @Qualifier("mapEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+    @Bean(name = "userTransactionManager")
+    public PlatformTransactionManager userTransactionManager(
+            @Qualifier("userEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 }

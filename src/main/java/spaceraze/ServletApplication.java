@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-@EntityScan(basePackages = {"spaceraze", "spaceraze.map"})
+@EntityScan(basePackages = {"spaceraze", "spaceraze.map", "spaceraze.user"})
 @SpringBootApplication
 public class ServletApplication {
 
