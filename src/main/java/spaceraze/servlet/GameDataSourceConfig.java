@@ -20,22 +20,22 @@ import java.util.Map;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        basePackages = "spaceraze.servlet.map.repository",
-        entityManagerFactoryRef = "mapEntityManagerFactory",
-        transactionManagerRef = "mapTransactionManager"
+        basePackages = "spaceraze.servlet.game.repository",
+        entityManagerFactoryRef = "gameEntityManagerFactory",
+        transactionManagerRef = "gameTransactionManager"
 )
-public class MapDataSourceConfig {
+public class GameDataSourceConfig {
 
-    @Bean(name = "mapDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.map")
-    public DataSource mapDataSource() {
+    @Bean(name = "gameDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.game")
+    public DataSource gameDataSource() {
         return DataSourceBuilder.create().build();
     }
 
-    @Bean(name = "mapEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean mapEntityManagerFactory(
+    @Bean(name = "gameEntityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean gameEntityManagerFactory(
             EntityManagerFactoryBuilder builder,
-            @Qualifier("mapDataSource") DataSource dataSource) {
+            @Qualifier("gameDataSource") DataSource dataSource) {
 
         Map<String, Object> properties = new HashMap<>();
         // Sätt dialekt för SQL Server
@@ -47,16 +47,15 @@ public class MapDataSourceConfig {
 
         return builder
                 .dataSource(dataSource)
-                .packages("spaceraze.map")
-                .persistenceUnit("map")
-                .properties(properties) // Lägg till properties här
+                .packages("spaceraze.game")
+                .persistenceUnit("game")
+                .properties(properties)
                 .build();
-
     }
 
-    @Bean(name = "mapTransactionManager")
-    public PlatformTransactionManager mapTransactionManager(
-            @Qualifier("mapEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+    @Bean(name = "gameTransactionManager")
+    public PlatformTransactionManager gameTransactionManager(
+            @Qualifier("gameEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 }
